@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>Trello #id external links</title>
+<style>
+    label{ display:block; position:relative; padding:5px 200px 10px 10px;text-align:right;width:300px;border:solid silver 1px; line-height:2em; margin-bottom:1em;border-radius:4px;}
+    label input{ position:absolute; right:10px; width:180px;top:10px;}
+    label small{ line-height:1em;}
+    button{ margin-left:450px;}
+
+
+</style>
+</head>
+<body>
+<label>
+    External url scheme:<input type="text" id="externalUrl_scheme" />
+    <br />
+    <small>use %d as a placeHolder for the generated url<br /> ie: http://myurl.com/%d</small>
+</label>
+<label>
+    always open in same window:<input type="checkbox" id="externalUrl_sameWindow" value="1"/>
+</label>
+<br />
+<button id="save">save</button>
+<script type="text/javascript" src="options.js"></script>
+</body>
+</html>

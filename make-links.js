@@ -10,17 +10,19 @@
 		return false;
 	}
 
-	function linkReplacement(m,id){
-		return ' <span class="externally-linked" title="' + (settings.scheme||'http://').replace(/%d/g,id) + '" style="color:blue;cursor:pointer">#'+id+'</span> ';
+	function linkReplacement(m, id){
+		return '<span class="externally-linked" title="' + (settings.scheme||'http://').replace(/%d/g,id) + '" style="color:blue;cursor:pointer">#'+id+'</span> ';
 	}
 
 	function replaceIds(elmt){
 		elmt || (elmt = this);
-		if( ! (elmt && elmt.tagName === 'A' && elmt.className && elmt.className.match(/list-card-title/) && !elmt.className.match(/externally-linked/) && elmt.innerHTML.match(/\s#\d+(\s|$)/) )){
+		if( ! (elmt && elmt.tagName === 'A' && elmt.className && elmt.className.match(/list-card-title/) && !elmt.className.match(/externally-linked/) && elmt.innerHTML.match(/(^|\s)#\d+(\s|$)/) )){
 			return false;
 		}
 		elmt.className += ' externally-linked';
-		elmt.innerHTML = elmt.innerHTML.replace(/\s#(\d+)(?=\s|$)/g, linkReplacement);
+		elmt.innerHTML = elmt.innerHTML.replace(/^(.*<\/span>)(.*$)/,function(m, idSpan, body){
+			return idSpan + body.replace(/(?:^|\s)#(\d+)(?=\s|$)/g, linkReplacement);
+		});
 		var links = elmt.querySelectorAll('span.externally-linked');
 		links && [].slice.call(links).forEach(function(link){
 			link.addEventListener('click', linkClicked, false);
